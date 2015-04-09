@@ -1,0 +1,7 @@
+proj.android/obj/
+proj.android/bin/
+proj.android/proguard/
+proj.ios_mac/
+proj.win32/Debug.win32
+proj.win32/ld.sdf
+proj.win32/ld.opensdf
