@@ -6,8 +6,6 @@
 using namespace CocosDenshion;
 USING_NS_CC;
 
-bool soundOn;
-
 AppDelegate::AppDelegate() {
 
 }
@@ -44,8 +42,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
 
-	Configuration::getInstance()->loadConfigFile("strings.plist");
-	soundOn = UserDefault::getInstance()->getBoolForKey("soundOn", true);
+	Configuration::getInstance()->loadConfigFile(STRING_FILE);
+	//soundOn = UserDefault::getInstance()->getBoolForKey(SOUND_KEY.c_str(), true);
 
     // create a scene. it's an autorelease object
     auto scene = MenuLayer::scene();

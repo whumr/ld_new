@@ -1,6 +1,7 @@
 #ifndef __ld__MenuLayer__
 #define __ld__MenuLayer__
 
+#include "Config.h"
 #include "cocos2d.h"
 USING_NS_CC;
 
@@ -19,6 +20,9 @@ private:
     //当点击"About"菜单项触发的回调函数
     void aboutIsPressed(Ref* psend);
     //当点击"settings"菜单项触发的回调函数
-    void SetttingsIsPressed(Ref* psend);
+    void setttingsIsPressed(Ref* psend);
+
+
+    void testIsPressed(Ref* psend);
 };
 #endif /* defined(__ld__MenuLayer__) */

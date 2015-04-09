@@ -21,7 +21,7 @@ bool ScoreLayer::init()
     auto size = Director::getInstance()->getWinSize();
     
     //背景
-    Sprite* bg = Sprite::create("img_bg_logo.jpg");
+    Sprite* bg = Sprite::create(IMG_BG + "img_bg_logo.jpg");
     bg->setPosition(Vec2(size.width*0.5,size.height*0.5));
     addChild(bg);
     
@@ -48,10 +48,10 @@ bool ScoreLayer::init()
     }
  
     //添加图片
-    Sprite *crown = Sprite::create("bestScore.png");
+    Sprite *crown = Sprite::create(IMG + "bestScore.png");
     crown->setPosition(Vec2(size.width/2, size.height*4/5-30));
     addChild(crown);
-    Sprite *record = Sprite::create("recordGirl.png");
+    Sprite *record = Sprite::create(IMG + "recordGirl.png");
     record->setPosition(Vec2(size.width/2, size.height*2/5));
     record->setOpacity(100);
     addChild(record,2);
@@ -72,7 +72,7 @@ bool ScoreLayer::init()
     addChild(score3,3);
     
     //添加一个按钮用于返回Menu
-	MenuItemImage * back= MenuItemImage::create("backHomeWord.png", "backHomeWord.png",CC_CALLBACK_1(ScoreLayer::backMenu, this));
+	MenuItemImage * back= MenuItemImage::create(IMG_MENU + "backHomeWord.png", IMG_MENU + "backHomeWord.png",CC_CALLBACK_1(ScoreLayer::backMenu, this));
     Menu* menu =Menu::create(back,NULL);
     menu->setPosition(Vec2(size.width/2, 30));
 

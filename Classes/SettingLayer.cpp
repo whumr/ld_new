@@ -4,8 +4,6 @@
 
 using namespace CocosDenshion;
 
-extern bool soundOn;
-
 Scene* SettingLayer::scene()
 {
     Scene *scene = Scene::create();
@@ -24,7 +22,7 @@ bool SettingLayer::init()
     auto size = Director::getInstance()->getWinSize();
     
     //背景
-    Sprite* bg = Sprite::create("img_bg_logo.jpg");
+    Sprite* bg = Sprite::create(IMG_BG + "img_bg_logo.jpg");
     bg->setPosition(Vec2(size.width*0.5,size.height*0.5));
     addChild(bg);
     
@@ -49,7 +47,7 @@ bool SettingLayer::init()
     //addChild(annotation);
     
     //添加对号图片，显示当前选择的操作
-	selectd = Sprite::create("selected.png");
+	selectd = Sprite::create(IMG_MENU + "selected.png");
     if(soundOn)
     {
         selectd->setPosition(Vec2(size.width*4/5, size.height/2+38));
@@ -61,8 +59,8 @@ bool SettingLayer::init()
     addChild(selectd,1,1);
 
     //添加一个按钮用于返回Menu
-	MenuItemImage * back= MenuItemImage::create("backHomeWord.png", "backHomeWord.png",CC_CALLBACK_1(SettingLayer::backMenu, this));
-    Menu* backMenu =Menu::create(back,NULL);
+	MenuItemImage * back= MenuItemImage::create(IMG_MENU + "backHomeWord.png", IMG_MENU + "backHomeWord.png",CC_CALLBACK_1(SettingLayer::backMenu, this));
+    Menu* backMenu =Menu::create(back, NULL);
     backMenu->setPosition(Vec2(size.width/2, 30));
     addChild(backMenu);
     
@@ -76,7 +74,7 @@ void SettingLayer::soundUp(Ref* psend)
 	selectd->setPosition(Vec2(size.width*4/5, size.height/2+38)); 
 	if (!SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())
 	{
-		SimpleAudioEngine::getInstance()->playBackgroundMusic("menuMusic.mp3",true);
+		SimpleAudioEngine::getInstance()->playBackgroundMusic((MUSIC + "menuMusic.mp3").c_str(), true);
 	}
 	else
 	{
@@ -95,5 +93,5 @@ void SettingLayer::soundDown(Ref* psend)
 void SettingLayer::backMenu(Ref* psend){
     //切换到"菜单"场景
     Director::getInstance()->replaceScene(TransitionPageTurn::create(1, MenuLayer::scene(),true));
-	UserDefault::getInstance()->setBoolForKey("soundOn", soundOn);
+	UserDefault::getInstance()->setBoolForKey(SOUND_KEY.c_str(), soundOn);
 }

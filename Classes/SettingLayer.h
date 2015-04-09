@@ -1,6 +1,7 @@
 #ifndef __ld__SettingLayer__
 #define __ld__SettingLayer__
 
+#include "Config.h"
 #include "cocos2d.h"
 USING_NS_CC;
 

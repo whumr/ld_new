@@ -1,7 +1,7 @@
 #ifndef __ld__AboutLayer__
 #define __ld__AboutLayer__
 
-
+#include "Config.h"
 #include "cocos2d.h"
 USING_NS_CC;
 
