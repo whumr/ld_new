@@ -17,4 +17,6 @@ static string SOUND_KEY = "soundOn";
 
 static string STRING_FILE = "strings.plist";
 
+static string ENEMY_CONFIG = "enemy.plist";
+
 #endif /* defined(__ld__Config__) */

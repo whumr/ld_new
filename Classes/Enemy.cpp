@@ -2,17 +2,94 @@
 #include "SimpleAudioEngine.h"
 
 using namespace CocosDenshion;
+using namespace std;
 
-Enemy* Enemy::createEnemy(const char* fileName,int _type,int _way){
+Enemy* Enemy::createEnemy(EnemyType type)
+{
     Enemy* enemy = new Enemy();
-    if(enemy && enemy->initWithSpriteFrameName(fileName)){
-        enemy->autorelease();
-        enemy->enemyInit(fileName,_type,_way);
-        return enemy;
+	enemy->setType(type);
+    if(enemy && enemy->init())
+	{
+		enemy->autorelease();
+		return enemy;
     }
-    CC_SAFE_DELETE(enemy);
-    return NULL;
+	else
+	{
+		CC_SAFE_DELETE(enemy);
+		return NULL;
+	}    
 }
+
+bool Enemy::init()
+{	
+	string key = "";
+	switch (_type)
+	{
+	case EnemyType::LOWEST:
+		key = "lowest";
+		break;
+	case EnemyType::LOW:
+		key = "low";
+		break;
+	case EnemyType::NORMAL:
+		key = "normal";
+		break;
+	case EnemyType::BETTER:
+		key = "better";
+		break;
+	case EnemyType::BOSS:
+		key = "boss";
+		break;
+	default:
+		return false;
+	}
+	auto conf = Configuration::getInstance();
+	this->initWithSpriteFrameName(conf->getValue(String::createWithFormat("%s.img", key)->getCString()).asString());
+	_hp = conf->getValue(String::createWithFormat("%s.hp", key)->getCString()).asInt();
+	_score = conf->getValue(String::createWithFormat("%s.score", key)->getCString()).asInt();
+	_speed = conf->getValue(String::createWithFormat("%s.speed", key)->getCString()).asInt();
+	_shootDelay = conf->getValue(String::createWithFormat("%s.shootDelay", key)->getCString()).asInt();
+	this->toBattle();
+	return true;
+}
+
+void Enemy::toBattle()
+{
+	auto size = Director::getInstance()->getWinSize();
+	auto contentSize = this->getContentSize();
+	float x = CCRANDOM_0_1() * size.width;
+	x = x < contentSize.width / 2 ? contentSize.width / 2 : 
+		(x > size.width - contentSize.width / 2 ? size.width - contentSize.width / 2 : x);
+	float y = size.height + contentSize.height;
+	this->setPosition(x, y);
+	switch (_type)
+	{
+	case EnemyType::LOWEST:
+		
+		break;
+	case EnemyType::LOW:
+		break;
+	case EnemyType::NORMAL:
+		break;
+	case EnemyType::BETTER:
+		break;
+	case EnemyType::BOSS:
+		break;
+	default:
+		;
+	}
+}
+
+void Enemy::shoot()
+{
+
+}
+
+
+
+
+
+
 //≥ı ºªØ
 void Enemy::enemyInit(const char* fileName,int _type,int _way){
 	isActed = false;

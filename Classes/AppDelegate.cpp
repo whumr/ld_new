@@ -43,7 +43,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
 
 	Configuration::getInstance()->loadConfigFile(STRING_FILE);
-	//soundOn = UserDefault::getInstance()->getBoolForKey(SOUND_KEY.c_str(), true);
+	Configuration::getInstance()->loadConfigFile(ENEMY_CONFIG);	
 
     // create a scene. it's an autorelease object
     auto scene = MenuLayer::scene();

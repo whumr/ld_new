@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>enemy1.png</key>
+            <key>lowest.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,89},{35,27}}</string>
@@ -17,7 +17,7 @@
                 <key>sourceSize</key>
                 <string>{35,27}</string>
             </dict>
-            <key>enemy2.png</key>
+            <key>low.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{84,61},{37,26}}</string>
@@ -30,7 +30,7 @@
                 <key>sourceSize</key>
                 <string>{37,26}</string>
             </dict>
-            <key>enemy3.png</key>
+            <key>normal.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{84,33},{38,26}}</string>
@@ -43,7 +43,7 @@
                 <key>sourceSize</key>
                 <string>{38,26}</string>
             </dict>
-            <key>enemy4.png</key>
+            <key>better.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{84,2},{38,29}}</string>
@@ -56,7 +56,7 @@
                 <key>sourceSize</key>
                 <string>{38,29}</string>
             </dict>
-            <key>enemy5.png</key>
+            <key>boss.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{80,66}}</string>

@@ -7,16 +7,30 @@ USING_NS_CC;
 class Enemy : public Sprite
 {
 public:
+	enum EnemyType{
+		LOWEST,
+		LOW,
+		NORMAL,
+		BETTER,
+		BOSS
+	};
     //实例化函数
-    static Enemy* createEnemy(const char* fileName,int _type,int _way);
-    //价值多少分数
-    int scoreValue;
-    //血量
-    int hp;
-    int enemyType;
-	bool isDead;
+    static Enemy* createEnemy(EnemyType type);
 	void enemyDead();
+	CC_SYNTHESIZE(int, _hp, Hp);
+	CC_SYNTHESIZE(int, _score, Score);
+	CC_SYNTHESIZE(int, _speed, Speed);
+	CC_SYNTHESIZE(bool, _dead, Dead);
+	CC_SYNTHESIZE(float, _shootDelay, ShootDelay);
+	CC_SYNTHESIZE(EnemyType, _type, Type);
+
 private:
+	bool init();
+	void toBattle();
+	void shoot();
+
+
+
     //初始化
     void enemyInit(const char* fileName,int _type,int _way);
     
@@ -32,8 +46,6 @@ private:
     int shootManyCount;
     void shootFive(Point playerPoint);
     void shootOne(Point playerPoint);    
-    
-    
 };
 
 #endif /* defined(__ld__Enemy__) */

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>data</key>
+		<dict>
+			<key>lowest.img</key>
+			<string>lowest.png</string>
+			<key>lowest.hp</key>
+			<string>1</string>
+			<key>lowest.score</key>
+			<string>1</string>
+			<key>lowest.speed</key>
+			<string>10</string>
+			<key>lowest.shootDelay</key>
+			<string>10</string>
+			
+			<key>low.img</key>
+			<string>low.png</string>
+			<key>low.hp</key>
+			<string>3</string>
+			<key>low.score</key>
+			<string>3</string>
+			<key>low.speed</key>
+			<string>10</string>
+			<key>low.shootDelay</key>
+			<string>5</string>
+			
+			<key>normal.img</key>
+			<string>normal.png</string>
+			<key>normal.hp</key>
+			<string>5</string>
+			<key>normal.score</key>
+			<string>5</string>
+			<key>normal.speed</key>
+			<string>10</string>
+			<key>normal.shootDelay</key>
+			<string>5</string>
+			
+			<key>better.img</key>
+			<string>better.png</string>
+			<key>better.hp</key>
+			<string>10</string>
+			<key>better.score</key>
+			<string>10</string>
+			<key>better.speed</key>
+			<string>10</string>
+			<key>better.shootDelay</key>
+			<string>3</string>
+			
+			<key>boss.img</key>
+			<string>boss.png</string>
+			<key>boss.hp</key>
+			<string>200</string>
+			<key>boss.score</key>
+			<string>200</string>
+			<key>boss.speed</key>
+			<string>10</string>
+			<key>boss.shootDelay</key>
+			<string>1</string>
+		</dict>
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>1</integer>
+		</dict>
+    </dict>
+</plist>
