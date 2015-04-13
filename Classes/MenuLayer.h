@@ -24,5 +24,6 @@ private:
 
 
     void testIsPressed(Ref* psend);
+	void loadCallback(Texture2D* texture, string name);
 };
 #endif /* defined(__ld__MenuLayer__) */

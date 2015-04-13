@@ -1,6 +1,6 @@
 #include "TestLayer.h"
 #include "MenuLayer.h"
-#include "HEnemy.h"
+#include "Player.h"
 
 Scene* TestLayer::scene()
 {
@@ -28,9 +28,9 @@ bool TestLayer::init()
 	//s->setPosition(size.width/2, size.height/2);
 	//addChild(s);
 
-
-	HEnemy* enemy = HEnemy::createEnemy((IMG + "enemy_bug.png").c_str(), 0, 0);
-    addChild(enemy);
+	Player* player = Player::getInstance();
+	player->setPosition((size.width - player->getContentSize().width) / 2, 200);
+    addChild(player);
 
     //添加一个按钮用于返回Menu
 	MenuItemImage * back= MenuItemImage::create(IMG_MENU + "backHomeWord.png", IMG_MENU + "backHomeWord.png",CC_CALLBACK_1(TestLayer::backMenu, this));

@@ -68,36 +68,57 @@ bool MenuLayer::init()
     addChild(menu);
     menu->alignItemsVerticallyWithPadding(10);
     
+
+
+	auto textureCache = Director::getInstance()->getTextureCache();
+	textureCache->addImageAsync(IMG_PLAYER + "plane1.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, "plan_yellow"));
+	textureCache->addImageAsync(IMG_PLAYER + "plane5.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, "plan_red"));
+	textureCache->addImageAsync(IMG_PLAYER + "plane22.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, "plan_blue"));
+
+
+
+
     return true;
 }
 
 //菜单项Play被按下时的回调函数
-void MenuLayer::playIsPressed(Ref* psend){
+void MenuLayer::playIsPressed(Ref* psend)
+{
     //切换到"关卡"场景
     //Director::getInstance()->replaceScene(TransitionFade::create(1, Level::scene()));
 
 }
 
 //菜单项High Scores被按下时的回调函数
-void MenuLayer::scoreIsPressed(Ref* psend){
+void MenuLayer::scoreIsPressed(Ref* psend)
+{
     //切换到“高分”场景
     Director::getInstance()->replaceScene(TransitionPageTurn::create(1, ScoreLayer::scene(),false));
 }
 
 //菜单项About被按下时的回调函数
-void MenuLayer::aboutIsPressed(Ref* psend){
+void MenuLayer::aboutIsPressed(Ref* psend)
+{
     //切换到“关于”场景
     Director::getInstance()->replaceScene(TransitionPageTurn::create(1, AboutLayer::scene(),false));
 }
 
 //菜单项Settings被按下时的回调函数
-void MenuLayer::setttingsIsPressed(Ref* psend){
+void MenuLayer::setttingsIsPressed(Ref* psend)
+{
     //切换到“Settings”场景
     Director::getInstance()->replaceScene(TransitionPageTurn::create(1, SettingLayer::scene(),false));
 }
 
 
-void MenuLayer::testIsPressed(Ref* psend){
+void MenuLayer::testIsPressed(Ref* psend)
+{
     //切换到“Settings”场景
     Director::getInstance()->replaceScene(TransitionPageTurn::create(1, TestLayer::scene(),false));
+}
+
+void MenuLayer::loadCallback(Texture2D* texture, string name)
+{
+	auto frame = SpriteFrame::createWithTexture(texture, Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height));
+	SpriteFrameCache::getInstance()->addSpriteFrame(frame, name);
 }

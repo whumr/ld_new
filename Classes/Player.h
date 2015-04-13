@@ -13,8 +13,10 @@ public:
 		BLUE
 	};
 	~Player();
-    static Player* getInstance();
+	static const PlanType DEFAULT_TYPE = YELLOW;
+    static Player* getInstance(PlanType type = DEFAULT_TYPE);
 
+	CC_SYNTHESIZE(PlanType, _type, Type);
 	CC_SYNTHESIZE(int, _hp, Hp);
 	CC_SYNTHESIZE(int, _score, Score);
 	CC_SYNTHESIZE(int, _bullet, Bullet);
@@ -22,13 +24,13 @@ public:
 	CC_SYNTHESIZE(int, _speed, Speed);
 	CC_SYNTHESIZE(bool, _dead, Dead);
 	CC_SYNTHESIZE(float, _shootDelay, ShootDelay);
-	CC_SYNTHESIZE(PlanType, _type, Type);
 
-
-    //int hp;//血量
-    //int hpMax;//血量最大值
-    //int score;//分数
-    //int killCount;//杀敌数
+	//选择飞机图片
+	void initPlane();
+	//被击中
+	void shot();
+	//挂掉
+	void die();
     //void downHp();//掉血
     //void addHp();//加血
     //void addScore(int _value);//加分

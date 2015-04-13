@@ -2,7 +2,7 @@
 
 static Player* player = NULL;
 
-Player* Player::getInstance()
+Player* Player::getInstance(PlanType type = DEFAULT_TYPE)
 {
 	if (!player)
 	{
@@ -17,6 +17,8 @@ Player* Player::getInstance()
 			player = NULL;
 		}
 	}
+	player->setType(type);
+	player->initPlane();
 	return player;
 }
 
@@ -28,14 +30,46 @@ bool Player::init()
 	_bullet = 2;
 	_speed = 20;
 	_shootDelay = 1;
-	_type = PlanType::YELLOW;
-	this->initWithSpriteFrameName("plan_yellow");
+	return true;
+}
+
+void Player::initPlane()
+{
+	switch (_type)
+	{
+	case Player::YELLOW:
+		this->initWithSpriteFrameName("plan_yellow");
+		break;
+	case Player::RED:
+		this->initWithSpriteFrameName("plan_red");
+		break;
+	case Player::BLUE:
+		this->initWithSpriteFrameName("plan_blue");
+		break;
+	default:
+		break;
+	}
+}
+
+void Player::shot()
+{
+	_hp--;
+	if (_hp <= 0)
+	{
+		this->die();
+	}
+}
+
+void Player::die()
+{
 }
 
 Player::~Player()
 {
 	player = NULL;
 }
+
+
 
 //Player* Player::createPlayer(const char* fileName){
 //    Player* player = new Player();
