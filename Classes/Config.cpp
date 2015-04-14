@@ -1,16 +1,33 @@
 #include "Config.h"
-#include "cocos2d.h"
-USING_NS_CC;
 
 bool soundOn = UserDefault::getInstance()->getBoolForKey(SOUND_KEY.c_str(), true);
+
+static Config* config = NULL;
 
 Config::~Config()
 {
 	enemyArray.clear();
-	bulletArray.clear();
 }
 
-Vector<Enemy*> Config::getEnemyArray(bool clear = false)
+Config* Config::getInstance()
+{
+	if (!config)
+	{
+		config = new Config();
+		if(config && config->init())
+		{
+			config->autorelease();
+		}
+		else
+		{
+			CC_SAFE_DELETE(config);
+			config = NULL;
+		}
+	}
+	return config;
+}
+
+Vector<Sprite*> Config::getEnemyArray(bool clear)
 {
 	if (clear)
 	{
@@ -19,11 +36,7 @@ Vector<Enemy*> Config::getEnemyArray(bool clear = false)
 	return enemyArray;
 }
 
-Vector<Bullet*> Config::getBulletArray(bool clear = false)
+bool Config::init()
 {
-	if (clear)
-	{
-		bulletArray.clear();
-	}
-	return bulletArray;
+	return true;
 }

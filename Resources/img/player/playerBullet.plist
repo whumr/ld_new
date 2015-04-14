@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>level1_bullet1.png</key>
+            <key>bullet_player_yellow</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,38},{10,20}}</string>
@@ -30,7 +30,7 @@
                 <key>sourceSize</key>
                 <string>{10,25}</string>
             </dict>
-            <key>level2_bullet1.png</key>
+            <key>bullet_player_purple</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,26},{10,20}}</string>

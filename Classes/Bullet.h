@@ -1,17 +1,13 @@
 #ifndef __ld__Bullet__
 #define __ld__Bullet__
 
-#include "cocos2d.h"
 #include "Config.h"
-USING_NS_CC;
+#include "Player.h"
+#include "Enemy.h"
 
 class Bullet : public Sprite
-{
-	enum BulletType{
-		PLAYER_YELLOW,
-		PLAYER_PURPLE,
-		ENMEY_YELLOW
-	};
+{	
+public:	
     //实例化函数
     static Bullet* createBullet(BulletType type);
 	CC_SYNTHESIZE(Vec2, _speed, Speed);
@@ -21,6 +17,8 @@ class Bullet : public Sprite
 private:
 	bool init();
 	void update(float time);
+	void checkEnemyShot();
+	void checkPlayerShot();
 
 //public:
 //    //实例化函数

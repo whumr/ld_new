@@ -1,6 +1,7 @@
 #include "TestLayer.h"
 #include "MenuLayer.h"
 #include "Player.h"
+#include "Enemy.h"
 
 Scene* TestLayer::scene()
 {
@@ -28,7 +29,7 @@ bool TestLayer::init()
 	//s->setPosition(size.width/2, size.height/2);
 	//addChild(s);
 
-	Player* player = Player::getInstance();
+	Player* player = Player::getInstance(PlanType::RED);
 	player->setPosition((size.width - player->getContentSize().width) / 2, 200);
     addChild(player);
 
@@ -37,11 +38,25 @@ bool TestLayer::init()
     Menu* backMenu =Menu::create(back,NULL);
     backMenu->setPosition(Vec2(size.width/2, 30));
     addChild(backMenu);
-    
+	    
+	this->schedule(schedule_selector(TestLayer::addEnemy), 3);
     return true;
 }
 
 void TestLayer::backMenu(Ref* psend){
     //ÇÐ»»µ½"²Ëµ¥"³¡¾°
     Director::getInstance()->replaceScene(TransitionPageTurn::create(1, MenuLayer::scene(),true));
+}
+
+void TestLayer::addEnemy(float time)
+{
+	Enemy* enemy = Enemy::createEnemy();
+	auto size = Director::getInstance()->getWinSize();
+	auto contentSize = enemy->getContentSize();
+	float x = CCRANDOM_0_1() * size.width;
+	x = x < contentSize.width / 2 ? contentSize.width / 2 : 
+		(x > size.width - contentSize.width / 2 ? size.width - contentSize.width / 2 : x);
+	float y = size.height + contentSize.height;
+	enemy->setPosition(x, y);
+	this->addChild(enemy);
 }

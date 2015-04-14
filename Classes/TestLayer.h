@@ -15,5 +15,6 @@ public:
     
 private:
     void backMenu(Ref* psend);    
+	void addEnemy(float time);
 };
 #endif /* defined(__ld__TestLayer__) */

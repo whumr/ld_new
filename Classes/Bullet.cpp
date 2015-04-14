@@ -18,13 +18,13 @@ bool Bullet::init()
 	_enemy = false;
 	switch (_type)
 	{
-	case Bullet::PLAYER_YELLOW:
+	case BulletType::PLAYER_YELLOW:
 		this->initWithSpriteFrameName("bullet_player_yellow");
 		break;
-	case Bullet::PLAYER_PURPLE:
+	case BulletType::PLAYER_PURPLE:
 		this->initWithSpriteFrameName("bullet_player_purple");
 		break;
-	case Bullet::ENMEY_YELLOW:
+	case BulletType::ENMEY_YELLOW:
 		_speed = Vec2(0, -3);
 		_enemy = true;
 		this->initWithSpriteFrameName("bullet_enemy_yellow");
@@ -32,6 +32,7 @@ bool Bullet::init()
 	default:
 		break;
 	}
+	this->scheduleUpdate();
 	return true;
 }
 
@@ -47,31 +48,46 @@ void Bullet::update(float time)
     }
     
     //处理子弹击中
-	Vector<Enemy*> array = Config::getEnemyArray();
+	switch (_type)
+	{
+	case BulletType::PLAYER_YELLOW:
+	case BulletType::PLAYER_PURPLE:
+		this->checkEnemyShot();
+		break;
+	case BulletType::ENMEY_YELLOW:
+		this->checkPlayerShot();
+		break;
+	default:
+		break;
+	}	
+}
+
+void Bullet::checkEnemyShot()
+{
+	Vector<Sprite*> array = Config::getInstance()->getEnemyArray();
 	for (int i = 0; i < array.size(); i++) {
 		Enemy* enemy = (Enemy*)array.at(i);
         if(enemy->getBoundingBox().intersectsRect(this->getBoundingBox()))
         {
-			if(enemy->hp > 0 && !enemy->isDead)
-			{				
-				switch(bulletType)
-				{
-					case 1:
-						(enemy->hp)--;
-						break;
-					case 2:
-						(enemy->hp)-=3;
-					default:
-						break;
-				}      
-				if(enemy->hp <= 0 && !enemy->isDead)
-				{
-					enemy->enemyDead();    
-				}
+			if (!enemy->getDead())
+			{
+				enemy->shot();
 				this->removeFromParentAndCleanup(true);
-				break;
-			}            
+			}			
         }
+    }
+}
+
+void Bullet::checkPlayerShot()
+{
+	Player* player = Player::getInstance();
+	if(player->getBoundingBox().intersectsRect(this->getBoundingBox()))
+    {
+		if (!player->getDead())
+		{
+			player->shot();
+			this->removeFromParentAndCleanup(true);
+		}
     }
 }
 

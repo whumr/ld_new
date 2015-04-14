@@ -1,8 +1,6 @@
 #include "Enemy.h"
 #include "SimpleAudioEngine.h"
-
 using namespace CocosDenshion;
-using namespace std;
 
 Enemy* Enemy::createEnemy(EnemyType type)
 {
@@ -44,31 +42,40 @@ bool Enemy::init()
 		return false;
 	}
 	auto conf = Configuration::getInstance();
-	this->initWithSpriteFrameName(conf->getValue(String::createWithFormat("%s.img", key)->getCString()).asString());
-	_hp = conf->getValue(String::createWithFormat("%s.hp", key)->getCString()).asInt();
-	_score = conf->getValue(String::createWithFormat("%s.score", key)->getCString()).asInt();
-	_speed = conf->getValue(String::createWithFormat("%s.speed", key)->getCString()).asInt();
-	_shootDelay = conf->getValue(String::createWithFormat("%s.shootDelay", key)->getCString()).asInt();
-	this->toBattle();
+	const char* keys = key.c_str();
+	this->initWithSpriteFrameName(conf->getValue(String::createWithFormat("%s.img", keys)->getCString()).asString());
+	_hp = conf->getValue(String::createWithFormat("%s.hp", keys)->getCString()).asInt();
+	_score = conf->getValue(String::createWithFormat("%s.score", keys)->getCString()).asInt();
+	_speed = conf->getValue(String::createWithFormat("%s.speed", keys)->getCString()).asInt();
+	_shootDelay = conf->getValue(String::createWithFormat("%s.shootDelay", keys)->getCString()).asInt();
+	_bulletType = BulletType::ENMEY_YELLOW;
+	_dead = false;
+	this->scheduleUpdate();
+	this->schedule(schedule_selector(Enemy::shoot), _shootDelay);
+	Vector<Sprite*> v = Config::getInstance()->getEnemyArray();
+	v.pushBack(this);
 	return true;
 }
 
-void Enemy::toBattle()
+void Enemy::shoot(float time)
 {
-	auto size = Director::getInstance()->getWinSize();
-	auto contentSize = this->getContentSize();
-	float x = CCRANDOM_0_1() * size.width;
-	x = x < contentSize.width / 2 ? contentSize.width / 2 : 
-		(x > size.width - contentSize.width / 2 ? size.width - contentSize.width / 2 : x);
-	float y = size.height + contentSize.height;
-	this->setPosition(x, y);
+	auto position = this->getPosition();
 	switch (_type)
 	{
-	case EnemyType::LOWEST:
-		
+	case EnemyType::LOWEST:		
+		{
+		Bullet* bullet = Bullet::createBullet(_bulletType);
+		bullet->setPosition(position + Vec2(0, -15));
+		this->getParent()->addChild(bullet);
 		break;
+		}
 	case EnemyType::LOW:
+		{
+		Bullet* bullet = Bullet::createBullet(_bulletType);
+		bullet->setPosition(position + Vec2(0, -15));
+		this->getParent()->addChild(bullet);
 		break;
+		}
 	case EnemyType::NORMAL:
 		break;
 	case EnemyType::BETTER:
@@ -76,18 +83,67 @@ void Enemy::toBattle()
 	case EnemyType::BOSS:
 		break;
 	default:
-		;
+		break;
 	}
 }
 
-void Enemy::shoot()
+void Enemy::shot()
 {
-
+	if (!_dead)
+	{
+		_hp -= 1;
+		if (_hp <= 0)
+		{
+			this->enemyDead();
+		}
+	}
 }
 
+void Enemy::enemyDead()
+{
+	if (soundOn)
+	{
+		if (_type == EnemyType::BOSS)
+		{
+			SimpleAudioEngine::getInstance()->playEffect((MUSIC + "effect_bigBoom.wav").c_str());
+		}
+		else
+		{
+			SimpleAudioEngine::getInstance()->playEffect((MUSIC + "effect_boom.mp3").c_str());
+		}
+	}	
+	Config::getInstance()->getEnemyArray().eraseObject(this);
+	this->removeFromParentAndCleanup(true);
+	_dead = true;
+}
 
-
-
+void Enemy::update(float time)
+{
+	if (!_dead)
+	{
+		switch (_type)
+		{
+		case EnemyType::LOWEST:		
+			this->setPosition(this->getPosition() - Vec2(0, _speed));
+			if (this->getPosition().y < -this->getContentSize().height / 2)
+			{
+				Config::getInstance()->getEnemyArray().eraseObject(this);
+				this->removeFromParentAndCleanup(true);
+			}
+			break;
+		case EnemyType::LOW:
+			break;
+		case EnemyType::NORMAL:
+			break;
+		case EnemyType::BETTER:
+			break;
+		case EnemyType::BOSS:
+			break;
+		default:
+			break;
+		}
+	}	
+}
 
 
 ////≥ı ºªØ

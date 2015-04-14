@@ -74,7 +74,8 @@ bool MenuLayer::init()
 	textureCache->addImageAsync(IMG_PLAYER + "plane1.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, "plan_yellow"));
 	textureCache->addImageAsync(IMG_PLAYER + "plane5.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, "plan_red"));
 	textureCache->addImageAsync(IMG_PLAYER + "plane22.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, "plan_blue"));
-
+	textureCache->addImageAsync(IMG_PLAYER + "playerBullet.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, IMG_PLAYER + "playerBullet.plist"));
+	textureCache->addImageAsync(IMG_ENEMY + "enemy.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, IMG_ENEMY + "enemy.plist"));
 
 
 
@@ -119,6 +120,13 @@ void MenuLayer::testIsPressed(Ref* psend)
 
 void MenuLayer::loadCallback(Texture2D* texture, string name)
 {
-	auto frame = SpriteFrame::createWithTexture(texture, Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height));
-	SpriteFrameCache::getInstance()->addSpriteFrame(frame, name);
+	if (name.size() > 6 && name.substr(name.length() - 6, 6).compare(".plist") == 0)
+	{
+		SpriteFrameCache::getInstance()->addSpriteFramesWithFile(name, texture);
+	}
+	else
+	{
+		auto frame = SpriteFrame::createWithTexture(texture, Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height));
+		SpriteFrameCache::getInstance()->addSpriteFrame(frame, name);
+	}	
 }

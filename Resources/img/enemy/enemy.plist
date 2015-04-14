@@ -69,7 +69,7 @@
                 <key>sourceSize</key>
                 <string>{80,66}</string>
             </dict>
-            <key>enemy_bullet.png</key>
+            <key>bullet_enemy_yellow</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,70},{5,5}}</string>

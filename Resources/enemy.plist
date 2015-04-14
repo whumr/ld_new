@@ -11,9 +11,9 @@
 			<key>lowest.score</key>
 			<string>1</string>
 			<key>lowest.speed</key>
-			<string>10</string>
+			<string>3</string>
 			<key>lowest.shootDelay</key>
-			<string>10</string>
+			<string>3</string>
 			
 			<key>low.img</key>
 			<string>low.png</string>

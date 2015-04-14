@@ -1,34 +1,30 @@
 #ifndef __ld__Enemy__
 #define __ld__Enemy__
 
-#include "cocos2d.h"
-USING_NS_CC;
+#include "Config.h"
+#include "Bullet.h"
 
 class Enemy : public Sprite
 {
-public:
-	enum EnemyType{
-		LOWEST,
-		LOW,
-		NORMAL,
-		BETTER,
-		BOSS
-	};
+public:	
+	static const EnemyType DEFAULT_TYPE = EnemyType::LOWEST;
     //实例化函数
-    static Enemy* createEnemy(EnemyType type);
-	void enemyDead();
+    static Enemy* createEnemy(EnemyType type = DEFAULT_TYPE);	
+	void shot();
 	CC_SYNTHESIZE(int, _hp, Hp);
 	CC_SYNTHESIZE(int, _score, Score);
 	CC_SYNTHESIZE(int, _speed, Speed);
 	CC_SYNTHESIZE(bool, _dead, Dead);
 	CC_SYNTHESIZE(float, _shootDelay, ShootDelay);
 	CC_SYNTHESIZE(EnemyType, _type, Type);
+	CC_SYNTHESIZE(BulletType, _bulletType, BulletType);
 
 private:
 	bool init();
-	void toBattle();
-	void shoot();
-
+	//void toBattle();
+	void shoot(float time);	
+	void enemyDead();
+	void update(float time);
 
 
  //   //初始化

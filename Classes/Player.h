@@ -1,22 +1,18 @@
 #ifndef __ld__Player__
 #define __ld__Player__
 
-#include "cocos2d.h"
-USING_NS_CC;
+#include "Config.h"
+#include "Bullet.h"
 
 class Player : public Sprite
 {
-public:
-	enum PlanType{
-		YELLOW,
-		RED,
-		BLUE
-	};
+public:		
 	~Player();
-	static const PlanType DEFAULT_TYPE = YELLOW;
+	static const PlanType DEFAULT_TYPE = PlanType::YELLOW;
     static Player* getInstance(PlanType type = DEFAULT_TYPE);
 
 	CC_SYNTHESIZE(PlanType, _type, Type);
+	CC_SYNTHESIZE(BulletType, _bulletType, BulletType);
 	CC_SYNTHESIZE(int, _hp, Hp);
 	CC_SYNTHESIZE(int, _score, Score);
 	CC_SYNTHESIZE(int, _bullet, Bullet);
@@ -29,8 +25,7 @@ public:
 	void initPlane();
 	//被击中
 	void shot();
-	//挂掉
-	void die();
+	
     //void downHp();//掉血
     //void addHp();//加血
     //void addScore(int _value);//加分
@@ -43,6 +38,9 @@ public:
     
 private:
 	bool init();
+	void shoot(float time);
+	//挂掉
+	void die();
     
     //void playerInit();//初始化函数
 };
