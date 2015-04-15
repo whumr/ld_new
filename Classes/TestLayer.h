@@ -2,8 +2,6 @@
 #define __ld__TestLayer__
 
 #include "Config.h"
-#include "cocos2d.h"
-USING_NS_CC;
 
 class TestLayer : public Layer
 {
@@ -16,5 +14,8 @@ public:
 private:
     void backMenu(Ref* psend);    
 	void addEnemy(float time);
+	bool TouchBegan(Touch *pTouch, Event *pEvent);
+	void TouchMoved(Touch *pTouch, Event *pEvent, Vec2 min, Vec2 max);
+
 };
 #endif /* defined(__ld__TestLayer__) */

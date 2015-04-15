@@ -7,13 +7,13 @@
 			<key>lowest.img</key>
 			<string>lowest.png</string>
 			<key>lowest.hp</key>
-			<string>1</string>
+			<string>5</string>
 			<key>lowest.score</key>
 			<string>1</string>
 			<key>lowest.speed</key>
-			<string>3</string>
+			<string>1</string>
 			<key>lowest.shootDelay</key>
-			<string>3</string>
+			<string>1</string>
 			
 			<key>low.img</key>
 			<string>low.png</string>
@@ -33,7 +33,7 @@
 			<key>normal.score</key>
 			<string>5</string>
 			<key>normal.speed</key>
-			<string>10</string>
+			<string>1</string>
 			<key>normal.shootDelay</key>
 			<string>5</string>
 			

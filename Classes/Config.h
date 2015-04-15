@@ -31,7 +31,7 @@ typedef enum {
 } PlanType;
 
 typedef enum {
-	PLAYER_YELLOW = 0,
+	PLAYER_YELLOW,
 	PLAYER_PURPLE,
 	ENMEY_YELLOW
 } BulletType;
@@ -49,7 +49,8 @@ class Config : public Ref
 public:
 	~Config();
 	static Config* getInstance();
-	Vector<Sprite*> getEnemyArray(bool clear = false);
+	Vector<Sprite*> getEnemyArray() {return enemyArray;};
+	void addEnemy(Sprite* enemy);
 
 private:
 	Vector<Sprite*> enemyArray;

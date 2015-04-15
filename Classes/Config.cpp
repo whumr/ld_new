@@ -2,11 +2,12 @@
 
 bool soundOn = UserDefault::getInstance()->getBoolForKey(SOUND_KEY.c_str(), true);
 
-static Config* config = NULL;
+static Config *config = nullptr;
 
 Config::~Config()
 {
 	enemyArray.clear();
+	config = nullptr;
 }
 
 Config* Config::getInstance()
@@ -14,29 +15,18 @@ Config* Config::getInstance()
 	if (!config)
 	{
 		config = new Config();
-		if(config && config->init())
-		{
-			config->autorelease();
-		}
-		else
-		{
-			CC_SAFE_DELETE(config);
-			config = NULL;
-		}
+		config->init();
 	}
 	return config;
 }
 
-Vector<Sprite*> Config::getEnemyArray(bool clear)
-{
-	if (clear)
-	{
-		enemyArray.clear();
-	}
-	return enemyArray;
-}
-
 bool Config::init()
 {
+	enemyArray.clear();
 	return true;
+}
+
+void Config::addEnemy(Sprite* enemy)
+{
+	enemyArray.pushBack(enemy);
 }

@@ -16,6 +16,7 @@ bool Bullet::init()
 {
 	_speed = Vec2(0, 3);
 	_enemy = false;
+	_dead = false;
 	switch (_type)
 	{
 	case BulletType::PLAYER_YELLOW:
@@ -38,27 +39,26 @@ bool Bullet::init()
 
 void Bullet::update(float time)
 {    
-	this->setPosition(this->getPosition() + _speed);
-    auto size = Director::getInstance()->getWinSize();
-    if(this->getPositionY() < -this->getContentSize().height || this->getPositionY() > size.height + this->getContentSize().height 
-		|| this->getPositionX() < -this->getContentSize().width || this->getPositionX() > size.width + this->getContentSize().width)
-    {
-        this->removeFromParentAndCleanup(true);
-        return;
-    }
-    
-    //处理子弹击中
-	switch (_type)
+	if (!_dead) 
 	{
-	case BulletType::PLAYER_YELLOW:
-	case BulletType::PLAYER_PURPLE:
-		this->checkEnemyShot();
-		break;
-	case BulletType::ENMEY_YELLOW:
-		this->checkPlayerShot();
-		break;
-	default:
-		break;
+		this->setPosition(this->getPosition() + _speed);
+		auto size = Director::getInstance()->getWinSize();
+		if(this->getPositionY() < -this->getContentSize().height || this->getPositionY() > size.height + this->getContentSize().height 
+			|| this->getPositionX() < -this->getContentSize().width || this->getPositionX() > size.width + this->getContentSize().width)
+		{
+			this->removeFromParentAndCleanup(true);
+			return;
+		}
+    
+		//处理子弹击中
+		if (_enemy)
+		{
+			this->checkPlayerShot();
+		}
+		else
+		{
+			this->checkEnemyShot();
+		}
 	}	
 }
 
@@ -67,13 +67,13 @@ void Bullet::checkEnemyShot()
 	Vector<Sprite*> array = Config::getInstance()->getEnemyArray();
 	for (int i = 0; i < array.size(); i++) {
 		Enemy* enemy = (Enemy*)array.at(i);
-        if(enemy->getBoundingBox().intersectsRect(this->getBoundingBox()))
+		if(!this->_dead && enemy->getBoundingBox().intersectsRect(this->getBoundingBox()))
         {
 			if (!enemy->getDead())
 			{
 				enemy->shot();
-				this->removeFromParentAndCleanup(true);
-			}			
+				this->die();
+			}
         }
     }
 }
@@ -81,38 +81,19 @@ void Bullet::checkEnemyShot()
 void Bullet::checkPlayerShot()
 {
 	Player* player = Player::getInstance();
-	if(player->getBoundingBox().intersectsRect(this->getBoundingBox()))
+	if(!this->_dead && player->getBoundingBox().intersectsRect(this->getBoundingBox()))
     {
 		if (!player->getDead())
 		{
 			player->shot();
-			this->removeFromParentAndCleanup(true);
+			this->die();
 		}
     }
 }
 
-//Bullet* Bullet::createBullet(const char* _fileName,float _speed,Point _position,int _type)
-//{
-//    Bullet* bullet = new Bullet();
-//    if(bullet && bullet->initWithSpriteFrameName(_fileName)){
-//        bullet->autorelease();
-//        bullet->bulletInit(_speed,_position,_type);
-//        return bullet;
-//    }
-//    CC_SAFE_DELETE(bullet);
-//    return NULL;
-//}
-//
-//void Bullet::bulletInit(float _speed,Point _position,int _type)
-//{
-//    speed = _speed;
-//    bulletType = _type;
-//    this->setPosition(_position);
-//    
-//    rotation += 180;
-//    rotation *=-1;
-//    
-//    this->scheduleUpdate();
-//}
-//
-////子弹逻辑
+void Bullet::die()
+{
+	_dead = true;
+	this->unscheduleUpdate();
+	this->removeFromParentAndCleanup(true);
+}
