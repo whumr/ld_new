@@ -6,6 +6,7 @@ Bullet* Bullet::createBullet(BulletType type)
 	bullet->setType(type);
     if(bullet && bullet->init()){
         bullet->autorelease();
+		Config::getInstance()->addBullet(bullet);
         return bullet;
     }
     CC_SAFE_DELETE(bullet);
@@ -46,6 +47,7 @@ void Bullet::update(float time)
 		if(this->getPositionY() < -this->getContentSize().height || this->getPositionY() > size.height + this->getContentSize().height 
 			|| this->getPositionX() < -this->getContentSize().width || this->getPositionX() > size.width + this->getContentSize().width)
 		{
+			Config::getInstance()->removeBullet(this);
 			this->removeFromParentAndCleanup(true);
 			return;
 		}
@@ -65,7 +67,8 @@ void Bullet::update(float time)
 void Bullet::checkEnemyShot()
 {
 	Vector<Sprite*> array = Config::getInstance()->getEnemyArray();
-	for (int i = 0; i < array.size(); i++) {
+	for (int i = 0; i < array.size(); i++) 
+	{
 		Enemy* enemy = (Enemy*)array.at(i);
 		if(!this->_dead && enemy->getBoundingBox().intersectsRect(this->getBoundingBox()))
         {
@@ -94,6 +97,6 @@ void Bullet::checkPlayerShot()
 void Bullet::die()
 {
 	_dead = true;
-	this->unscheduleUpdate();
+	Config::getInstance()->removeBullet(this);
 	this->removeFromParentAndCleanup(true);
 }

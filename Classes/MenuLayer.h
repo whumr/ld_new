@@ -2,17 +2,15 @@
 #define __ld__MenuLayer__
 
 #include "Config.h"
-#include "cocos2d.h"
-USING_NS_CC;
 
 class MenuLayer : public Layer
 {
-public:
-    virtual bool init();
+public:    
     static Scene* scene();
     CREATE_FUNC(MenuLayer);
 
 private:
+	bool init();
     //当点击"Play"菜单项触发的回调函数
     void playIsPressed(Ref* psend);
     //当点击"Score"菜单项触发的回调函数

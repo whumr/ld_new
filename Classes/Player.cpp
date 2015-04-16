@@ -1,7 +1,7 @@
 #include "Player.h"
 
 static Player* player = NULL;
-static int Bullet_gap = 12;
+static int Bullet_gap = 15;
 static int Bullet_y = 15;
 
 Player* Player::getInstance()
@@ -17,23 +17,24 @@ Player* Player::getInstance()
 		{
 			CC_SAFE_DELETE(player);
 			player = NULL;
-		}
+		}		
 	}
-	player->initPlane();
 	return player;
 }
 
 bool Player::init()
 {
+	_type = DEFAULT_TYPE;
 	_hp = 3;
 	_score = 0;
 	_kill = 0;
-	_bullet = 3;
+	_bullet = 1;
 	_speed = 20;
 	_shootDelay = 1;
 	_dead = false;
-	_type = DEFAULT_TYPE;
 	_bulletType = BulletType::PLAYER_YELLOW;
+	initPlane();
+	this->schedule(schedule_selector(Player::shoot), _shootDelay);
 	return true;
 }
 
@@ -55,8 +56,7 @@ void Player::initPlane()
 		break;
 	default:
 		break;
-	}
-	this->schedule(schedule_selector(Player::shoot), _shootDelay);
+	}	
 }
 
 void Player::shot()

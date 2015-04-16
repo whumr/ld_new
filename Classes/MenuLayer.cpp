@@ -1,12 +1,9 @@
 #include "MenuLayer.h"
-#include "SimpleAudioEngine.h"
 #include "SettingLayer.h"
 #include "AboutLayer.h"
 #include "ScoreLayer.h"
 
 #include "TestLayer.h"
-
-using namespace CocosDenshion;
 
 Scene* MenuLayer::scene()
 {

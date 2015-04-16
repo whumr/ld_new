@@ -6,10 +6,11 @@
 
 class Player : public Sprite
 {
-public:		
-	~Player();
+public:			
 	static const PlanType DEFAULT_TYPE = PlanType::YELLOW;
     static Player* getInstance();
+
+	~Player();
 
 	PlanType _type;
 	CC_SYNTHESIZE(BulletType, _bulletType, BulletType);

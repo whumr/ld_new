@@ -143,7 +143,9 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\Config.cpp" />
     <ClCompile Include="..\Classes\Effect.cpp" />
     <ClCompile Include="..\Classes\Enemy.cpp" />
+    <ClCompile Include="..\Classes\LdMap.cpp" />
     <ClCompile Include="..\Classes\MenuLayer.cpp" />
+    <ClCompile Include="..\Classes\PauseLayer.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\ScoreLayer.cpp" />
     <ClCompile Include="..\Classes\SettingLayer.cpp" />
@@ -157,7 +159,9 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\Config.h" />
     <ClInclude Include="..\Classes\Effect.h" />
     <ClInclude Include="..\Classes\Enemy.h" />
+    <ClInclude Include="..\Classes\LdMap.h" />
     <ClInclude Include="..\Classes\MenuLayer.h" />
+    <ClInclude Include="..\Classes\PauseLayer.h" />
     <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\ScoreLayer.h" />
     <ClInclude Include="..\Classes\SettingLayer.h" />

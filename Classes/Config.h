@@ -3,11 +3,14 @@
 
 #include <string.h>
 #include "cocos2d.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
+using namespace CocosDenshion;
 using namespace std;
 
 extern bool soundOn;
+extern int level;
 
 static string MUSIC = "music/";
 
@@ -50,10 +53,18 @@ public:
 	~Config();
 	static Config* getInstance();
 	Vector<Sprite*> getEnemyArray() {return enemyArray;};
+	//不能由外部getEnemyArray之后使用push操作
 	void addEnemy(Sprite* enemy);
+	void removeEnemy(Sprite* enemy);
+	void addBullet(Sprite* bullet);
+	void removeBullet(Sprite* bullet);
+	void setMap(Layer* map);
+	void removeAll();
 
 private:
 	Vector<Sprite*> enemyArray;
+	Vector<Sprite*> bulletArray;
+	Layer* _map;
 	bool init();
 };
 

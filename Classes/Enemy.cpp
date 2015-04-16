@@ -1,6 +1,4 @@
 #include "Enemy.h"
-#include "SimpleAudioEngine.h"
-using namespace CocosDenshion;
 
 Enemy* Enemy::createEnemy(EnemyType type)
 {
@@ -115,7 +113,7 @@ void Enemy::enemyDead()
 	_dead = true;
 	//¶¯»­Ð§¹û
 	this->getParent()->addChild(Effect::enemyBoom(this->getPosition()));
-	Config::getInstance()->getEnemyArray().eraseObject(this);
+	Config::getInstance()->removeEnemy(this);
 	this->removeFromParentAndCleanup(true);
 }
 
@@ -129,7 +127,7 @@ void Enemy::update(float time)
 			this->setPosition(this->getPosition() - Vec2(0, _speed));
 			if (this->getPosition().y < -this->getContentSize().height / 2)
 			{
-				Config::getInstance()->getEnemyArray().eraseObject(this);
+				Config::getInstance()->removeEnemy(this);
 				this->removeFromParentAndCleanup(true);
 			}
 			break;
