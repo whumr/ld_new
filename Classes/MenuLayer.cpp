@@ -71,6 +71,8 @@ bool MenuLayer::init()
 	textureCache->addImageAsync(IMG_PLAYER + "plane1.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, "plan_yellow"));
 	textureCache->addImageAsync(IMG_PLAYER + "plane5.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, "plan_red"));
 	textureCache->addImageAsync(IMG_PLAYER + "plane22.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, "plan_blue"));
+	textureCache->addImageAsync(IMG_PLAYER + "icon_hp.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, "player_hp"));
+	
 	textureCache->addImageAsync(IMG_PLAYER + "playerBullet.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, IMG_PLAYER + "playerBullet.plist"));
 	textureCache->addImageAsync(IMG_ENEMY + "enemy.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, IMG_ENEMY + "enemy.plist"));
 

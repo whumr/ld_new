@@ -4,6 +4,7 @@
 #include "Config.h"
 #include "Bullet.h"
 #include "Effect.h"
+#include "Player.h"
 
 class Enemy : public Sprite
 {
@@ -22,7 +23,7 @@ public:
 
 private:
 	bool init();
-	//void toBattle();
+	void toBattle();
 	void shoot(float time);	
 	void enemyDead();
 	void update(float time);

@@ -11,7 +11,7 @@
 			<key>lowest.score</key>
 			<string>1</string>
 			<key>lowest.speed</key>
-			<string>1</string>
+			<string>2</string>
 			<key>lowest.shootDelay</key>
 			<string>1</string>
 			
@@ -24,7 +24,7 @@
 			<key>low.speed</key>
 			<string>10</string>
 			<key>low.shootDelay</key>
-			<string>5</string>
+			<string>2</string>
 			
 			<key>normal.img</key>
 			<string>normal.png</string>

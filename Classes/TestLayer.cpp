@@ -47,6 +47,21 @@ bool TestLayer::init()
     addChild(menu);
 
 	//分数
+	_score = player->getScore();
+	Label* score_label = Label::createWithSystemFont("score", DEFAULT_FONT, 24);
+    score_label->setPosition(30, size.height-22);
+    addChild(score_label);
+    
+	Label* labelScores = Label::createWithSystemFont(String::createWithFormat("%d", _score)->getCString(), DEFAULT_FONT, 24);
+    labelScores->setPosition(110, size.height-22);
+    labelScores->setColor(Color3B(255, 255, 0));
+	labelScores->setTag(LayerTag::TAG_SCORE);
+    addChild(labelScores);
+
+	//显血
+	this->drawHp(true);
+
+	//大招
 	    
 	//敌机
 	this->schedule(schedule_selector(TestLayer::addEnemy), 2);
@@ -59,19 +74,13 @@ bool TestLayer::init()
 	_listener_touch->onTouchMoved = CC_CALLBACK_2(TestLayer::TouchMoved, this, min, max);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(_listener_touch, this);
 	
+	this->scheduleUpdate();
     return true;
 }
 
 void TestLayer::addEnemy(float time)
 {
-	Enemy* enemy = Enemy::createEnemy();	
-	auto size = Director::getInstance()->getWinSize();
-	auto contentSize = enemy->getContentSize();
-	float x = CCRANDOM_0_1() * size.width;
-	x = x < contentSize.width / 2 ? contentSize.width / 2 : 
-		(x > size.width - contentSize.width / 2 ? size.width - contentSize.width / 2 : x);
-	float y = size.height + contentSize.height;
-	enemy->setPosition(x, y);
+	Enemy* enemy = Enemy::createEnemy(EnemyType::LOW);		
 	this->addChild(enemy);
 }
 
@@ -100,4 +109,55 @@ void TestLayer::doPause(Ref* psend)
     SimpleAudioEngine::getInstance()->pauseAllEffects();
     PauseLayer* pauseLayer = PauseLayer::create();
     addChild(pauseLayer, 1);
+}
+
+void TestLayer::drawHp(bool init)
+{	
+	if (init)
+	{
+		for (int i = 0; i < 3; i ++)
+		{
+			Sprite* hp = Sprite::createWithSpriteFrameName("player_hp");
+			hp->setTag(LayerTag::TAG_HP_1 + i);
+			hp->setPosition(25 * (i + 1), hp->getContentSize().height / 2);
+			addChild(hp);
+		}
+		
+	}
+	int hp = Player::getInstance()->getHp();
+	if (hp != _player_hp)
+	{
+		_player_hp = Player::getInstance()->getHp();
+		for (int i = 0; i < 3; i ++)
+		{
+			if (_player_hp > i)
+			{
+				getChildByTag(LayerTag::TAG_HP_1 + i)->setVisible(true);
+			}
+			else
+			{
+				getChildByTag(LayerTag::TAG_HP_1 + i)->setVisible(false);
+			}
+		}
+	}	
+}
+
+void TestLayer::drawScore()
+{
+	_score = Player::getInstance()->getScore();
+	((Label*)getChildByTag(LayerTag::TAG_SCORE))->setString(String::createWithFormat("%d", _score)->getCString());
+}
+
+void TestLayer::update(float time)
+{
+	int hp = Player::getInstance()->getScore();
+	if (hp != _player_hp)
+	{
+		drawHp();
+	}
+	int score = Player::getInstance()->getScore();
+	if (score != _score)
+	{
+		drawScore();
+	}
 }

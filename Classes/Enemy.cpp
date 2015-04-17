@@ -49,9 +49,49 @@ bool Enemy::init()
 	_shootDelay = conf->getValue(String::createWithFormat("%s.shootDelay", keys)->getCString()).asInt();
 	_bulletType = BulletType::ENMEY_YELLOW;
 	_dead = false;
+	this->toBattle();
 	this->scheduleUpdate();
 	this->schedule(schedule_selector(Enemy::shoot), _shootDelay);	
 	return true;
+}
+
+void Enemy::toBattle()
+{
+	//position
+	auto size = Director::getInstance()->getWinSize();
+	auto contentSize = getContentSize();
+	float x = CCRANDOM_0_1() * size.width;
+	x = x < contentSize.width / 2 ? contentSize.width / 2 : 
+		(x > size.width - contentSize.width / 2 ? size.width - contentSize.width / 2 : x);
+	float y = size.height + contentSize.height;
+	//run action
+	switch (_type)
+	{
+	case EnemyType::LOWEST:
+		{
+			//飞行在update里面设定
+			setPosition(x, y);
+			break;
+		}
+		
+	case EnemyType::LOW:
+		{
+			setPosition(x, y);
+			//CardinalSplineTo::create()PointArray
+			ccBezierConfig bezier; // 创建贝塞尔曲线
+            bezier.controlPoint_1 = Vec2(0, size.height + contentSize.height / 2); // 起始点
+            bezier.controlPoint_2 = Vec2(size.width / 2, size.height / 2); //控制点
+            bezier.endPosition = Vec2(-contentSize.width, size.height / 2); // 结束位置
+            this->runAction(BezierTo::create(4, bezier));
+			break;
+		}		
+	case EnemyType::NORMAL:
+		break;
+	case EnemyType::BETTER:
+		break;
+	case EnemyType::BOSS:
+		break;
+	}
 }
 
 void Enemy::shoot(float time)
@@ -112,7 +152,9 @@ void Enemy::enemyDead()
 	}	
 	_dead = true;
 	//动画效果
-	this->getParent()->addChild(Effect::enemyBoom(this->getPosition()));
+	this->getParent()->addChild(Effect::enemyBoom(this->getPosition()));	
+	Player* player = Player::getInstance();
+	player->setScore(player->getScore() + _score);
 	Config::getInstance()->removeEnemy(this);
 	this->removeFromParentAndCleanup(true);
 }
@@ -124,12 +166,7 @@ void Enemy::update(float time)
 		switch (_type)
 		{
 		case EnemyType::LOWEST:		
-			this->setPosition(this->getPosition() - Vec2(0, _speed));
-			if (this->getPosition().y < -this->getContentSize().height / 2)
-			{
-				Config::getInstance()->removeEnemy(this);
-				this->removeFromParentAndCleanup(true);
-			}
+			this->setPosition(this->getPosition() - Vec2(0, _speed));			
 			break;
 		case EnemyType::LOW:
 			break;
@@ -139,8 +176,14 @@ void Enemy::update(float time)
 			break;
 		case EnemyType::BOSS:
 			break;
-		default:
-			break;
 		}
 	}	
+	auto size = this->getContentSize();
+	auto position = this->getPosition();
+	if (position.y < -size.height / 2 || position.x < -size.width / 2 
+		|| position.x > Director::getInstance()->getWinSize().width + size.width / 2)
+	{
+		Config::getInstance()->removeEnemy(this);
+		this->removeFromParentAndCleanup(true);
+	}
 }

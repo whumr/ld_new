@@ -12,6 +12,8 @@ using namespace std;
 extern bool soundOn;
 extern int level;
 
+static string DEFAULT_FONT = "fonts/Marker Felt.ttf";
+
 static string MUSIC = "music/";
 
 static string IMG = "img/";
@@ -46,6 +48,16 @@ typedef enum {
 	BETTER,
 	BOSS
 } EnemyType;
+
+typedef enum{
+	TAG_SCORE = 100,
+	TAG_HP_1,
+	TAG_HP_2,
+	TAG_HP_3,
+	TAG_SKILL_1,
+	TAG_SKILL_2,
+	TAG_SKILL_3
+} LayerTag;
 
 class Config : public Ref
 {
