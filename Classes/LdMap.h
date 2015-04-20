@@ -3,7 +3,7 @@
 
 #include "Config.h"
 
-class LdMap : public cocos2d::Layer
+class LdMap : public Layer
 {
 public:
     CREATE_FUNC(LdMap);

@@ -63,7 +63,7 @@ void Enemy::toBattle()
 	float x = CCRANDOM_0_1() * size.width;
 	x = x < contentSize.width / 2 ? contentSize.width / 2 : 
 		(x > size.width - contentSize.width / 2 ? size.width - contentSize.width / 2 : x);
-	float y = size.height + contentSize.height;
+	float y = size.height + contentSize.height / 2;
 	//run action
 	switch (_type)
 	{
@@ -76,17 +76,20 @@ void Enemy::toBattle()
 		
 	case EnemyType::LOW:
 		{
+			this->runAction(CircleBy::create(10, Vec2(-contentSize.width, size.height + contentSize.height / 2), size.width, M_PI / 2));	
+			break;
+		}		
+	case EnemyType::NORMAL:
+		{
 			setPosition(x, y);
 			//CardinalSplineTo::create()PointArray
 			ccBezierConfig bezier; // 创建贝塞尔曲线
-            bezier.controlPoint_1 = Vec2(0, size.height + contentSize.height / 2); // 起始点
+            //bezier.controlPoint_1 = Vec2(0, size.height + contentSize.height / 2); // 起始点
             bezier.controlPoint_2 = Vec2(size.width / 2, size.height / 2); //控制点
             bezier.endPosition = Vec2(-contentSize.width, size.height / 2); // 结束位置
             this->runAction(BezierTo::create(4, bezier));
 			break;
-		}		
-	case EnemyType::NORMAL:
-		break;
+		}
 	case EnemyType::BETTER:
 		break;
 	case EnemyType::BOSS:
