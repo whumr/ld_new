@@ -2,6 +2,10 @@
 #define __ld__MenuLayer__
 
 #include "Config.h"
+#include "SettingLayer.h"
+#include "AboutLayer.h"
+#include "ScoreLayer.h"
+#include "TestLayer.h"
 
 class MenuLayer : public Layer
 {

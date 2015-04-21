@@ -71,15 +71,25 @@ void Enemy::toBattle()
 		{
 			//飞行在update里面设定
 			setPosition(x, y);
+			Trail::moveDown(this, 150);
 			break;
 		}
 		
 	case EnemyType::LOW:
 		{
-			this->runAction(CircleBy::create(10, Vec2(-contentSize.width, size.height + contentSize.height / 2), size.width, M_PI / 2));	
+			Trail::circleFromRightTop(this, 10);
+			//this->runAction(CircleBy::create(10, Vec2(-contentSize.width, size.height + contentSize.height / 2), 
+			//	size.width, M_PI / 2));	
 			break;
 		}		
 	case EnemyType::NORMAL:
+		{
+			Trail::circleFromLeftTop(this, 10);
+			//this->runAction(CircleBy::create(10, Vec2(size.width + contentSize.width, size.height + contentSize.height / 2), 
+			//	size.width, M_PI / 2, M_PI * 3 / 2, false));	
+			break;
+		}
+	case EnemyType::BETTER:
 		{
 			setPosition(x, y);
 			//CardinalSplineTo::create()PointArray
@@ -90,8 +100,6 @@ void Enemy::toBattle()
             this->runAction(BezierTo::create(4, bezier));
 			break;
 		}
-	case EnemyType::BETTER:
-		break;
 	case EnemyType::BOSS:
 		break;
 	}
@@ -117,7 +125,12 @@ void Enemy::shoot(float time)
 		break;
 		}
 	case EnemyType::NORMAL:
+		{
+		Bullet* bullet = Bullet::createBullet(_bulletType);
+		bullet->setPosition(position + Vec2(0, -15));
+		this->getParent()->addChild(bullet);
 		break;
+		}
 	case EnemyType::BETTER:
 		break;
 	case EnemyType::BOSS:
@@ -166,27 +179,27 @@ void Enemy::update(float time)
 {
 	if (!_dead)
 	{
-		switch (_type)
+		//switch (_type)
+		//{
+		//case EnemyType::LOWEST:		
+		//	//this->setPosition(this->getPosition() - Vec2(0, _speed));			
+		//	break;
+		//case EnemyType::LOW:
+		//	break;
+		//case EnemyType::NORMAL:
+		//	break;
+		//case EnemyType::BETTER:
+		//	break;
+		//case EnemyType::BOSS:
+		//	break;
+		//}
+		auto size = this->getContentSize();
+		auto position = this->getPosition();
+		if (position.y < -size.height / 2 || position.x < -size.width / 2 
+			|| position.x > Director::getInstance()->getWinSize().width + size.width / 2)
 		{
-		case EnemyType::LOWEST:		
-			this->setPosition(this->getPosition() - Vec2(0, _speed));			
-			break;
-		case EnemyType::LOW:
-			break;
-		case EnemyType::NORMAL:
-			break;
-		case EnemyType::BETTER:
-			break;
-		case EnemyType::BOSS:
-			break;
+			Config::getInstance()->removeEnemy(this);
+			this->removeFromParentAndCleanup(true);
 		}
-	}	
-	auto size = this->getContentSize();
-	auto position = this->getPosition();
-	if (position.y < -size.height / 2 || position.x < -size.width / 2 
-		|| position.x > Director::getInstance()->getWinSize().width + size.width / 2)
-	{
-		Config::getInstance()->removeEnemy(this);
-		this->removeFromParentAndCleanup(true);
-	}
+	}		
 }

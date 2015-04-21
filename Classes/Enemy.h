@@ -5,7 +5,8 @@
 #include "Bullet.h"
 #include "Effect.h"
 #include "Player.h"
-#include "CircleBy.h"
+//#include "CircleBy.h"
+#include "Trail.h"
 
 class Enemy : public Sprite
 {

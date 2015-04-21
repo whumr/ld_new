@@ -45,6 +45,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	Configuration::getInstance()->loadConfigFile(STRING_FILE);
 	Configuration::getInstance()->loadConfigFile(ENEMY_CONFIG);	
 
+	//≥ı ºªØconfig
+	Config::getInstance();
     // create a scene. it's an autorelease object
     auto scene = MenuLayer::scene();
     // run

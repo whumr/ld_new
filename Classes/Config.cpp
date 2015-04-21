@@ -1,7 +1,9 @@
 #include "Config.h"
 
-bool soundOn = UserDefault::getInstance()->getBoolForKey(SOUND_KEY.c_str(), true);
 int level = 1;
+bool soundOn = true;
+float SIZE_WIDTH = 0;
+float SIZE_HEIGHT = 0;
 
 static Config *config = nullptr;
 
@@ -25,6 +27,9 @@ bool Config::init()
 {
 	enemyArray.clear();
 	bulletArray.clear();
+	soundOn = UserDefault::getInstance()->getBoolForKey(SOUND_KEY.c_str(), true);
+	SIZE_WIDTH = Director::getInstance()->getWinSize().width;
+	SIZE_HEIGHT = Director::getInstance()->getWinSize().height;
 	return true;
 }
 

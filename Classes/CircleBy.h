@@ -29,4 +29,23 @@ private:
 	//当前旋转弧度
 	float _current_radian;
 };
+
+class MoveStrict : public ActionInterval
+{
+public:
+	static MoveStrict* create(float angleCW, float velocity);
+
+private:
+	bool init(float angleCW, float velocity);
+    void update(float time);
+
+	//顺时针角度
+	float _angleCW;
+	//每秒速度
+	float _velocity;
+	//每一帧x坐标变换
+	float _v_x;
+	//每一帧y坐标变换
+	float _v_y;
+};
 #endif

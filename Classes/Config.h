@@ -11,6 +11,8 @@ using namespace std;
 
 extern bool soundOn;
 extern int level;
+extern float SIZE_WIDTH;
+extern float SIZE_HEIGHT;
 
 static string DEFAULT_FONT = "fonts/Marker Felt.ttf";
 

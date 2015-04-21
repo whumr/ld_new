@@ -22,7 +22,7 @@ bool CircleBy::init(float time, Point center, float radius, float circle, float 
 		_circle = circle;
 		_start = start;
 		_current_radian = start;
-		_radian = _circle / (time / Director::getInstance()->getAnimationInterval());
+		_radian = _circle / time * Director::getInstance()->getAnimationInterval();
 		return true;
 	}
 	return false;
@@ -30,16 +30,37 @@ bool CircleBy::init(float time, Point center, float radius, float circle, float 
 
 void CircleBy::update(float time)
 {
-	//Vec2 position = _target->getPosition();
-	//_target->setPosition(position + Vec2());
-	//_current_radian += _radian;
-	////float x = 
-	//Vec2 p = Vec2(_center.x + _radius * sin(_radian), _center.y + _radius * cos(_radian));
-	_current_radian += _radian;
+	_current_radian = _clockwise ? _current_radian + _radian : _current_radian - _radian;
 	float x = _radius * sin(_current_radian);
 	float y = _radius * cos(_current_radian);
-	Vec2 p = _clockwise ? _center + Vec2(x, y) : _center - Vec2(x, y);
+	_target->setPosition(_center + Vec2(x, y));
+}
 
-	_target->setPosition(p);
-	log("%f\t%f", p.x, p.y);
+
+
+MoveStrict* MoveStrict::create(float angleCW, float velocity)
+{
+	MoveStrict* moveStrict = new MoveStrict();
+    if (moveStrict && moveStrict->init(angleCW, velocity))
+    {
+        moveStrict->autorelease();
+        return moveStrict;
+    }
+    CC_SAFE_DELETE(moveStrict);
+    return nullptr;
+}
+
+bool MoveStrict::init(float angleCW, float velocity)
+{
+	_angleCW = angleCW;
+	_velocity = velocity * Director::getInstance()->getAnimationInterval();
+	_v_x = _velocity * sin(_angleCW);
+	_v_y = _velocity * cos(_angleCW);
+	return true;
+}
+
+void MoveStrict::update(float time)
+{
+	auto position = _target->getPosition();
+	_target->setPosition(position + Vec2(_v_x , _v_y));
 }

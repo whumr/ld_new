@@ -80,8 +80,12 @@ bool TestLayer::init()
 
 void TestLayer::addEnemy(float time)
 {
+	Enemy* enemy1 = Enemy::createEnemy(EnemyType::LOWEST);		
+	this->addChild(enemy1);
 	Enemy* enemy = Enemy::createEnemy(EnemyType::LOW);		
 	this->addChild(enemy);
+	Enemy* enemy2 = Enemy::createEnemy(EnemyType::NORMAL);		
+	this->addChild(enemy2);
 }
 
 bool TestLayer::TouchBegan(Touch *pTouch, Event *pEvent)

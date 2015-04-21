@@ -1,9 +1,4 @@
 #include "MenuLayer.h"
-#include "SettingLayer.h"
-#include "AboutLayer.h"
-#include "ScoreLayer.h"
-
-#include "TestLayer.h"
 
 Scene* MenuLayer::scene()
 {
@@ -18,22 +13,22 @@ bool MenuLayer::init()
     if (!Layer::init())
     {
         return false;
-    }       
+    }	
     //播放菜单场景的音乐
     if (soundOn)
 	{		
 		SimpleAudioEngine::getInstance()->playBackgroundMusic((MUSIC + "menuMusic.mp3").c_str(), true);
 	}
     //获取整个设备的尺寸
-    auto size = Director::getInstance()->getWinSize();
+    //auto size = Director::getInstance()->getWinSize();
     
     //创建Menu背景
     Sprite* bg = Sprite::create(IMG_BG + "img_bg_logo.jpg");
-    bg->setPosition(Vec2(size.width*0.5,size.height*0.5));
+    bg->setPosition(Vec2(SIZE_WIDTH / 2, SIZE_HEIGHT / 2));
     addChild(bg);
     
     Sprite* logo = Sprite::create(IMG_BG + "logo.png");
-    logo->setPosition(Vec2(size.width*0.5,size.height*2/3+15));
+    logo->setPosition(Vec2(SIZE_WIDTH / 2, SIZE_HEIGHT * 2 / 3 + 15));
     addChild(logo);
     
     //创建Menu菜单项-play
@@ -61,7 +56,7 @@ bool MenuLayer::init()
 	
 	//利用3个菜单项创建Menu菜单
     Menu * menu = Menu::create(itemPlay,itemScore,itemAbout,itemSettings,test,NULL);
-    menu->setPosition(Vec2(size.width/2, size.height/3-10));
+    menu->setPosition(Vec2(SIZE_WIDTH / 2, SIZE_HEIGHT / 3 - 10));
     addChild(menu);
     menu->alignItemsVerticallyWithPadding(10);
     
