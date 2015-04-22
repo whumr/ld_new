@@ -16,5 +16,6 @@ void Trail::circleFromRightTop(Sprite* sprite, float time)
 
 void Trail::moveDown(Sprite* sprite, float velocity)
 {
-	sprite->runAction(MoveStrict::create(M_PI, velocity));
+	//sprite->runAction(RepeatForever::create(MoveStrict::create(M_PI, velocity)));
+	sprite->runAction(MoveStrict::create(M_PI, velocity, sprite->getContentSize()));
 }
