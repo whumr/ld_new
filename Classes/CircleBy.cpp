@@ -70,3 +70,66 @@ void MoveStrict::update(float time)
 	auto position = _target->getPosition();
 	_target->setPosition(position + Vec2(_v_x , _v_y));
 }
+
+
+
+
+MoveRandom* MoveRandom::create(float time, float velocity, Size spriteSize)
+{
+	MoveRandom* moveRandom = new MoveRandom();
+    if (moveRandom && moveRandom->init(time, velocity, spriteSize))
+    {
+        moveRandom->autorelease();
+        return moveRandom;
+    }
+    CC_SAFE_DELETE(moveRandom);
+    return nullptr;
+}
+
+bool MoveRandom::init(float time, float velocity, Size spriteSize)
+{	
+	_enter = false;
+	_lasted = time;
+	_min_x = spriteSize.width / 2;
+	_min_y = spriteSize.height / 2;
+	_angleCW = CCRANDOM_0_1() * M_PI + M_PI / 2;
+	_velocity = velocity * Director::getInstance()->getAnimationInterval();
+	_v_x = _velocity * sin(_angleCW);
+	_v_y = _velocity * cos(_angleCW);
+	float duration = time + SIZE_HEIGHT * 2 / velocity;
+	if (ActionInterval::initWithDuration(duration))
+	{		
+		return true;
+	}
+	return false;
+}
+
+void MoveRandom::update(float time)
+{	
+	auto position = _target->getPosition();
+	if (_enter)
+	{		
+		position += Vec2(_v_x , _v_y);
+		_target->setPosition(position);
+		if (this->getElapsed() < _lasted)
+		{
+			if (position.x <= _min_x || position.x >= SIZE_WIDTH - _min_x)
+			{
+				_v_x = -_v_x;
+			}
+			if (position.y <= _min_y || position.y >= SIZE_HEIGHT - _min_y)
+			{
+				_v_y = -_v_y;
+			}
+		}		
+	}
+	else 
+	{
+		position += Vec2(0, -_velocity);
+		_target->setPosition(position);
+		if (position.y < SIZE_HEIGHT - _min_y)
+		{
+			_enter = true;
+		}
+	}
+}

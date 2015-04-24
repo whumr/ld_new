@@ -19,3 +19,8 @@ void Trail::moveDown(Sprite* sprite, float velocity)
 	//sprite->runAction(RepeatForever::create(MoveStrict::create(M_PI, velocity)));
 	sprite->runAction(MoveStrict::create(M_PI, velocity, sprite->getContentSize()));
 }
+
+void Trail::moveRandom(Sprite* sprite, float velocity, float lasted)
+{
+	sprite->runAction(MoveRandom::create(lasted, velocity, sprite->getContentSize()));
+}

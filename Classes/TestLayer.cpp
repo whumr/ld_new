@@ -38,6 +38,8 @@ bool TestLayer::init()
 	auto p_size = player->getContentSize();
 	player->setPosition((size.width - p_size.width) / 2, 200);
     addChild(player);
+	_player_hp = player->getHp();
+	_player_thunder = player->getThunder();
 
 	//暂停
 	MenuItemImage* pause = MenuItemImage::create(IMG_MENU + "pause.png", IMG_MENU + "pause.png", CC_CALLBACK_1(TestLayer::doPause, this));
@@ -62,9 +64,13 @@ bool TestLayer::init()
 	this->drawHp(true);
 
 	//大招
+	this->drawThunder(true);
 	    
 	//敌机
 	this->schedule(schedule_selector(TestLayer::addEnemy), 2);
+	
+	//道具
+	this->schedule(schedule_selector(TestLayer::addGem), 20);
 
 	//触摸
 	Vec2 min = Vec2(p_size.width / 2, p_size.height / 2);
@@ -74,6 +80,9 @@ bool TestLayer::init()
 	_listener_touch->onTouchMoved = CC_CALLBACK_2(TestLayer::TouchMoved, this, min, max);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(_listener_touch, this);
 	
+	Enemy* enemy3 = Enemy::createEnemy(EnemyType::BOSS);
+	this->addChild(enemy3);
+
 	this->scheduleUpdate();
     return true;
 }
@@ -85,7 +94,28 @@ void TestLayer::addEnemy(float time)
 	Enemy* enemy = Enemy::createEnemy(EnemyType::LOW);		
 	this->addChild(enemy);
 	Enemy* enemy2 = Enemy::createEnemy(EnemyType::NORMAL);		
-	this->addChild(enemy2);
+	this->addChild(enemy2);	
+}
+
+void TestLayer::addGem(float time)
+{
+	int r = random(1, 3);
+	GemType gemType = GemType::HP;
+	switch (r)
+	{
+	case 2:
+		{
+			gemType = GemType::BULLET;
+			break;
+		}
+	case 3:
+		{
+			gemType = GemType::THUNDER;
+			break;
+		}
+	}
+	Gem* gem = Gem::createGem(gemType);
+	this->addChild(gem);
 }
 
 bool TestLayer::TouchBegan(Touch *pTouch, Event *pEvent)
@@ -119,11 +149,12 @@ void TestLayer::drawHp(bool init)
 {	
 	if (init)
 	{
-		for (int i = 0; i < 3; i ++)
+		for (int i = 0; i < MAX_HP; i ++)
 		{
 			Sprite* hp = Sprite::createWithSpriteFrameName("player_hp");
 			hp->setTag(LayerTag::TAG_HP_1 + i);
-			hp->setPosition(25 * (i + 1), hp->getContentSize().height / 2);
+			auto size = hp->getContentSize();
+			hp->setPosition(size.width * (i + 1), size.height / 2);
 			addChild(hp);
 		}
 		
@@ -131,8 +162,8 @@ void TestLayer::drawHp(bool init)
 	int hp = Player::getInstance()->getHp();
 	if (hp != _player_hp)
 	{
-		_player_hp = Player::getInstance()->getHp();
-		for (int i = 0; i < 3; i ++)
+		_player_hp = hp;
+		for (int i = 0; i < MAX_HP; i ++)
 		{
 			if (_player_hp > i)
 			{
@@ -146,6 +177,38 @@ void TestLayer::drawHp(bool init)
 	}	
 }
 
+void TestLayer::drawThunder(bool init)
+{	
+	if (init)
+	{
+		for (int i = 0; i < MAX_THUNDER; i ++)
+		{
+			Sprite* thunder = Sprite::createWithSpriteFrameName("gem_thunder");
+			thunder->setTag(LayerTag::TAG_SKILL_1 + i);
+			auto size = thunder->getContentSize();
+			thunder->setPosition(SIZE_WIDTH - (size.width * (MAX_THUNDER - i)), size.height / 2);
+			addChild(thunder);
+		}
+		
+	}
+	int thunder = Player::getInstance()->getThunder();
+	if (thunder != _player_thunder)
+	{
+		_player_thunder = thunder;
+		for (int i = 0; i < MAX_THUNDER; i ++)
+		{
+			if (_player_thunder > i)
+			{
+				getChildByTag(LayerTag::TAG_SKILL_1 + i)->setVisible(true);
+			}
+			else
+			{
+				getChildByTag(LayerTag::TAG_SKILL_1 + i)->setVisible(false);
+			}
+		}
+	}	
+}
+
 void TestLayer::drawScore()
 {
 	_score = Player::getInstance()->getScore();
@@ -154,13 +217,16 @@ void TestLayer::drawScore()
 
 void TestLayer::update(float time)
 {
-	int hp = Player::getInstance()->getScore();
-	if (hp != _player_hp)
+	Player* player = Player::getInstance();
+	if (player->getHp() != _player_hp)
 	{
 		drawHp();
 	}
-	int score = Player::getInstance()->getScore();
-	if (score != _score)
+	if (player->getThunder() != _player_thunder)
+	{
+		drawHp();
+	}
+	if (player->getScore() != _score)
 	{
 		drawScore();
 	}

@@ -15,7 +15,7 @@ Bullet* Bullet::createBullet(BulletType type)
 
 bool Bullet::init()
 {
-	_speed = Vec2(0, 3);
+	_speed = Vec2(0, 6);
 	_enemy = false;
 	_dead = false;
 	switch (_type)
@@ -27,7 +27,7 @@ bool Bullet::init()
 		this->initWithSpriteFrameName("bullet_player_purple");
 		break;
 	case BulletType::ENMEY_YELLOW:
-		_speed = Vec2(0, -3);
+		_speed = Vec2(0, -5);
 		_enemy = true;
 		this->initWithSpriteFrameName("bullet_enemy_yellow");
 		break;

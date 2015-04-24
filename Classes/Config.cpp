@@ -30,6 +30,7 @@ bool Config::init()
 	soundOn = UserDefault::getInstance()->getBoolForKey(SOUND_KEY.c_str(), true);
 	SIZE_WIDTH = Director::getInstance()->getWinSize().width;
 	SIZE_HEIGHT = Director::getInstance()->getWinSize().height;
+	CCRANDOM_0_1();
 	return true;
 }
 

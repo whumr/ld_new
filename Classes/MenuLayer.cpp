@@ -71,7 +71,10 @@ bool MenuLayer::init()
 	textureCache->addImageAsync(IMG_PLAYER + "playerBullet.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, IMG_PLAYER + "playerBullet.plist"));
 	textureCache->addImageAsync(IMG_ENEMY + "enemy.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, IMG_ENEMY + "enemy.plist"));
 
-
+	textureCache->addImageAsync(IMG_PLAYER + "hp.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, "gem_hp"));
+	textureCache->addImageAsync(IMG_PLAYER + "upLevel.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, "gem_bullet"));
+	textureCache->addImageAsync(IMG_PLAYER + "skill1.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, "gem_missile"));
+	textureCache->addImageAsync(IMG_PLAYER + "skill2.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, "gem_thunder"));
 
     return true;
 }

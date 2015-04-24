@@ -25,12 +25,13 @@ Player* Player::getInstance()
 bool Player::init()
 {
 	_type = DEFAULT_TYPE;
-	_hp = 3;
+	_hp = MAX_HP;
 	_score = 0;
 	_kill = 0;
-	_bullet = 1;
+	_bullet = 0;
 	_speed = 20;
-	_shootDelay = 1;
+	_shootDelay = 0.3;
+	_thunder = MAX_THUNDER;
 	_dead = false;
 	_bulletType = BulletType::PLAYER_YELLOW;
 	initPlane();
@@ -104,6 +105,41 @@ void Player::shoot(float time)
 		bullet6->setPosition(position + Vec2(-Bullet_gap * 3, Bullet_y));
 		this->getParent()->addChild(bullet5);
 		this->getParent()->addChild(bullet6);
+	}
+}
+
+void Player::addGem(GemType gemType)
+{
+	switch (gemType)
+	{
+	case GemType::HP:
+		{
+			if (_hp < MAX_HP)
+			{
+				_hp++;
+			}
+			break;
+		}
+	case GemType::BULLET:
+		{
+			if (_bullet < MAX_BULLET)
+			{
+				_bullet++;
+			}			
+			break;
+		}
+	case GemType::MISSILE:
+		{
+			break;
+		}
+	case GemType::THUNDER:
+		{
+			if (_thunder < MAX_THUNDER)
+			{
+				_thunder++;
+			}			
+			break;
+		}
 	}
 }
 

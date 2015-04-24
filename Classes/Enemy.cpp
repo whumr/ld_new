@@ -101,7 +101,11 @@ void Enemy::toBattle()
 			break;
 		}
 	case EnemyType::BOSS:
-		break;
+		{
+			setPosition(x, y);
+			Trail::moveRandom(this, 150, 20);
+			break;
+		}
 	}
 }
 

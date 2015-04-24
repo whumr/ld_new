@@ -38,12 +38,38 @@ private:
     void update(float time);
 
 	//顺时针角度
-	float _angleCW;
+	double _angleCW;
 	//每秒速度
 	float _velocity;
 	//每一帧x坐标变换
 	float _v_x;
 	//每一帧y坐标变换
 	float _v_y;
+};
+
+class MoveRandom : public ActionInterval
+{
+public:
+	static MoveRandom* create(float time, float velocity, Size spriteSize);
+
+private:
+	bool init(float time, float velocity, Size spriteSize);
+    void update(float time);
+
+	//精灵大小
+	float _min_x;
+	float _min_y;
+	//顺时针角度
+	double _angleCW;
+	//每秒速度
+	float _velocity;
+	//每一帧x坐标变换
+	float _v_x;
+	//每一帧y坐标变换
+	float _v_y;
+	//是否进入屏幕
+	bool _enter;
+	//多少秒后退出
+	float _lasted;
 };
 #endif

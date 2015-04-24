@@ -8,6 +8,7 @@ class Trail : public Ref
 {
 public:
 	static void moveDown(Sprite* sprite, float velocity);
+	static void moveRandom(Sprite* sprite, float velocity, float lasted);
 	static void circleFromLeftTop(Sprite* sprite, float time);
 	static void circleFromRightTop(Sprite* sprite, float time);
 };

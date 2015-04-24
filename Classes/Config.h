@@ -14,6 +14,10 @@ extern int level;
 extern float SIZE_WIDTH;
 extern float SIZE_HEIGHT;
 
+static int MAX_HP = 3;
+static int MAX_BULLET = 3;
+static int MAX_THUNDER = 3;
+
 static string DEFAULT_FONT = "fonts/Marker Felt.ttf";
 
 static string MUSIC = "music/";
@@ -50,6 +54,13 @@ typedef enum {
 	BETTER,
 	BOSS
 } EnemyType;
+
+typedef enum {
+	HP,
+	BULLET,
+	MISSILE,
+	THUNDER
+} GemType;
 
 typedef enum{
 	TAG_SCORE = 100,

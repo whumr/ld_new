@@ -21,12 +21,15 @@ public:
 	CC_SYNTHESIZE(int, _speed, Speed);
 	CC_SYNTHESIZE(bool, _dead, Dead);
 	CC_SYNTHESIZE(float, _shootDelay, ShootDelay);
+	CC_SYNTHESIZE(int, _thunder, Thunder);
 
 	//选择飞机图片
 	void initPlane();
 	//被击中
 	void shot();
 	void setType(PlanType type);
+	//吃道具
+	void addGem(GemType gemType);
 	    
 private:
 	bool init();
