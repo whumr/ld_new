@@ -102,6 +102,7 @@ void Enemy::toBattle()
 		}
 	case EnemyType::BOSS:
 		{
+			setScale(2, 2);
 			setPosition(x, y);
 			Trail::moveRandom(this, 150, 20);
 			break;
