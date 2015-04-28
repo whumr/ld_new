@@ -30,6 +30,8 @@ public:
 	void setType(PlanType type);
 	//吃道具
 	void addGem(GemType gemType);
+	//放闪电
+	void thunder();
 	    
 private:
 	bool init();

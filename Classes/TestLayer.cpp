@@ -183,9 +183,10 @@ void TestLayer::drawThunder(bool init)
 	{
 		for (int i = 0; i < MAX_THUNDER; i ++)
 		{
-			Sprite* thunder = Sprite::createWithSpriteFrameName("gem_thunder");
+			Skill* thunder = Skill::createSkill(SkillType::SKILL_THUNDER);
+			//Sprite* thunder = Sprite::createWithSpriteFrameName("gem_thunder");
 			thunder->setTag(LayerTag::TAG_SKILL_1 + i);
-			auto size = thunder->getContentSize();
+			auto size = thunder->getSkillSize();
 			thunder->setPosition(SIZE_WIDTH - (size.width * (MAX_THUNDER - i)), size.height / 2);
 			addChild(thunder);
 		}
@@ -199,11 +200,11 @@ void TestLayer::drawThunder(bool init)
 		{
 			if (_player_thunder > i)
 			{
-				getChildByTag(LayerTag::TAG_SKILL_1 + i)->setVisible(true);
+				getChildByTag(LayerTag::TAG_SKILL_3 - i)->setVisible(true);
 			}
 			else
 			{
-				getChildByTag(LayerTag::TAG_SKILL_1 + i)->setVisible(false);
+				getChildByTag(LayerTag::TAG_SKILL_3 - i)->setVisible(false);
 			}
 		}
 	}	
@@ -224,7 +225,7 @@ void TestLayer::update(float time)
 	}
 	if (player->getThunder() != _player_thunder)
 	{
-		drawHp();
+		drawThunder();
 	}
 	if (player->getScore() != _score)
 	{

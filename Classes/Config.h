@@ -72,6 +72,11 @@ typedef enum{
 	TAG_SKILL_3
 } LayerTag;
 
+typedef enum{
+	SKILL_THUNDER,
+	SKILL_REINFORCE
+} SkillType;
+
 class Config : public Ref
 {
 public:

@@ -9,6 +9,7 @@
 #include "PauseLayer.h"
 #include "LdMap.h"
 #include "Gem.h"
+#include "Skill.h"
 
 class TestLayer : public Layer
 {

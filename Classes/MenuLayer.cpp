@@ -76,6 +76,8 @@ bool MenuLayer::init()
 	textureCache->addImageAsync(IMG_PLAYER + "skill1.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, "gem_missile"));
 	textureCache->addImageAsync(IMG_PLAYER + "skill2.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, "gem_thunder"));
 
+	textureCache->addImageAsync(IMG_PLAYER + "thunder.png", CC_CALLBACK_1(MenuLayer::loadCallback, this, IMG_PLAYER + "thunder.plist"));
+
     return true;
 }
 

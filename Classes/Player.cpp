@@ -66,6 +66,7 @@ void Player::shot()
 	if (_hp <= 0)
 	{
 		this->die();
+		_hp = 0;
 	}
 }
 
@@ -140,6 +141,14 @@ void Player::addGem(GemType gemType)
 			}			
 			break;
 		}
+	}
+}
+
+void Player::thunder()
+{
+	if (_thunder > 0)
+	{
+		_thunder--;
 	}
 }
 
