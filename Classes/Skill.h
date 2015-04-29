@@ -3,6 +3,7 @@
 
 #include "Config.h"
 #include "Player.h"
+#include "Enemy.h"
 
 class Skill : public Node
 {
@@ -12,10 +13,13 @@ public:
 
 private:
 	Size _skillSize;
+	Vector<Sprite*> _thunders;
 
     bool init(SkillType skillType);//³õÊ¼»¯º¯Êý
 
 	void thunder();
+	void thundering(float time);
+	void thunderEnd(Node* thunder);
 	void reinforce();
 };
 

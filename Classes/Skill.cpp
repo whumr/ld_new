@@ -50,29 +50,70 @@ Size Skill::getSkillSize()
 void Skill::thunder()
 {
 	log("thunder...");
-	Player::getInstance()->thunder();
-
-	auto animationCache = AnimationCache::getInstance();
-	// check if already loaded
-	auto animation = animationCache->getAnimation("skill_thunder");
-	if (!animation)
+	Player* player = Player::getInstance();
+	if (!player->getThundering())
 	{
-		auto spriteFrameCache = SpriteFrameCache::getInstance();
-		animation = Animation::create();
-		animation->setDelayPerUnit(0.2f);
-		//put frames into animation
-		for (int i = 0; i < 8; i++)
+		player->thunder();
+		auto animationCache = AnimationCache::getInstance();
+		// check if already loaded
+		auto animation = animationCache->getAnimation("skill_thunder");
+		if (!animation)
 		{
-			animation->addSpriteFrame(spriteFrameCache->getSpriteFrameByName(String::createWithFormat("thunder_%d.png", i)->getCString()));
+			auto spriteFrameCache = SpriteFrameCache::getInstance();
+			animation = Animation::create();
+			animation->setDelayPerUnit(0.1f);
+			//put frames into animation
+			for (int i = 0; i < 8; i++)
+			{
+				animation->addSpriteFrame(spriteFrameCache->getSpriteFrameByName(String::createWithFormat("thunder_%d.png", i)->getCString()));
+			}
+			// put the animation into cache
+			animationCache->addAnimation(animation, "skill_thunder");
 		}
-		// put the animation into cache
-		animationCache->addAnimation(animation, "skill_thunder");
+		float x = (SIZE_WIDTH - 100) / 6;
+		float y = (SIZE_HEIGHT - 80) / 8;
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				Sprite* thunder = Sprite::createWithSpriteFrameName("thunder_0.png");
+				thunder->setPosition(50 + x * (i * 2 + 1), 40 + y * (j * 2 + 1));
+				thunder->setRotation(15);
+				this->getParent()->addChild(thunder);
+				_thunders.pushBack(thunder);
+				thunder->runAction(Sequence::create(Repeat::create(Animate::create(animation), 10), 
+					CallFuncN::create(CC_CALLBACK_1(Skill::thunderEnd, this)), NULL));
+			}
+		}
+		this->getParent()->schedule(CC_CALLBACK_1(Skill::thundering, this), 1, "thudering");
+	}	
+}
+
+void Skill::thunderEnd(Node* thunder)
+{	
+	_thunders.eraseObject((Sprite*)thunder);
+	thunder->removeFromParentAndCleanup(true);
+	if (_thunders.empty())
+	{
+		log("thunderEnd...");
+		Player::getInstance()->setThundering(false);
 	}
-	auto animate = Animate::create(animation);
-	Sprite* thunder = Sprite::createWithSpriteFrameName("thunder_0.png");
-	thunder->setPosition(SIZE_WIDTH / 2, SIZE_HEIGHT / 2);
-	thunder->runAction(RepeatForever::create(animate));
-	this->getParent()->addChild(thunder);
+}
+
+void Skill::thundering(float time)
+{
+	if (Player::getInstance()->getThundering())
+	{
+		Vector<Sprite*> enemyArray = Config::getInstance()->getEnemyArray();
+		for (int i = 0; i < enemyArray.size(); i++) 
+		{
+			((Enemy*)(enemyArray.at(i)))->shot();
+		}
+	}
+	else
+	{
+		this->getParent()->unschedule("thudering");
+	}
 }
 
 void Skill::reinforce()

@@ -32,7 +32,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     if(!glview) {
         glview = GLViewImpl::create("ld");
 		glview->setFrameSize(512,768);
-		glview->setFrameZoomFactor(0.6f);
+		//glview->setFrameZoomFactor(0.6f);
         director->setOpenGLView(glview);
     }
 

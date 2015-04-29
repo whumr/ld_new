@@ -22,6 +22,7 @@ public:
 	CC_SYNTHESIZE(bool, _dead, Dead);
 	CC_SYNTHESIZE(float, _shootDelay, ShootDelay);
 	CC_SYNTHESIZE(int, _thunder, Thunder);
+	CC_SYNTHESIZE(bool, _thundering, Thundering);
 
 	//Ñ¡Ôñ·É»úÍ¼Æ¬
 	void initPlane();

@@ -33,6 +33,7 @@ bool Player::init()
 	_shootDelay = 0.3;
 	_thunder = MAX_THUNDER;
 	_dead = false;
+	_thundering = false;
 	_bulletType = BulletType::PLAYER_YELLOW;
 	initPlane();
 	this->schedule(schedule_selector(Player::shoot), _shootDelay);
@@ -146,9 +147,10 @@ void Player::addGem(GemType gemType)
 
 void Player::thunder()
 {
-	if (_thunder > 0)
+	if (_thunder > 0 && !_thundering)
 	{
 		_thunder--;
+		_thundering = true;
 	}
 }
 
