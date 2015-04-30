@@ -51,7 +51,7 @@
 			<key>boss.img</key>
 			<string>boss.png</string>
 			<key>boss.hp</key>
-			<string>200</string>
+			<string>10</string>
 			<key>boss.score</key>
 			<string>200</string>
 			<key>boss.speed</key>

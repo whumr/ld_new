@@ -30,7 +30,7 @@ bool Player::init()
 	_kill = 0;
 	_bullet = 0;
 	_speed = 20;
-	_shootDelay = 0.3;
+	_shootDelay = 0.3f;
 	_thunder = MAX_THUNDER;
 	_dead = false;
 	_thundering = false;
@@ -73,6 +73,23 @@ void Player::shot()
 
 void Player::die()
 {
+	//auto animationCache = AnimationCache::getInstance();
+	//// check if already loaded
+	//auto animation = animationCache->getAnimation("player_explosion");
+	//if (!animation)
+	//{
+	//	auto spriteFrameCache = SpriteFrameCache::getInstance();
+	//	animation = Animation::create();
+	//	animation->setDelayPerUnit(0.1f);
+	//	//put frames into animation
+	//	for (int i = 1; i <= 9; i++)
+	//	{
+	//		animation->addSpriteFrame(spriteFrameCache->getSpriteFrameByName(String::createWithFormat("explosion_%d.png", i)->getCString()));
+	//	}
+	//	// put the animation into cache
+	//	animationCache->addAnimation(animation, "player_explosion");
+	//}
+	//this->runAction(Repeat::create(Animate::create(animation), 1));
 }
 
 void Player::shoot(float time)

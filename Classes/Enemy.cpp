@@ -159,21 +159,23 @@ void Enemy::shot()
 
 void Enemy::enemyDead()
 {
-	//音效
-	if (soundOn)
+	if (_type == EnemyType::BOSS)
 	{
-		if (_type == EnemyType::BOSS)
+		if (soundOn)
 		{
 			SimpleAudioEngine::getInstance()->playEffect((MUSIC + "effect_bigBoom.wav").c_str());
 		}
-		else
+		Effect::getInstance()->bossBoom(this->getParent(), this->getPosition());
+	}
+	else
+	{
+		if (soundOn)
 		{
 			SimpleAudioEngine::getInstance()->playEffect((MUSIC + "effect_boom.mp3").c_str());
 		}
-	}	
-	_dead = true;
-	//动画效果
-	this->getParent()->addChild(Effect::enemyBoom(this->getPosition()));	
+		Effect::getInstance()->enemyBoom(this->getParent(), this->getPosition());
+	}
+	_dead = true;	
 	Player* player = Player::getInstance();
 	player->setScore(player->getScore() + _score);
 	Config::getInstance()->removeEnemy(this);

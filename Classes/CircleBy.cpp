@@ -92,7 +92,7 @@ bool MoveRandom::init(float time, float velocity, Size spriteSize)
 	_lasted = time;
 	_min_x = spriteSize.width / 2;
 	_min_y = spriteSize.height / 2;
-	_angleCW = CCRANDOM_0_1() * M_PI + M_PI / 2;
+	_angleCW = CCRANDOM_0_1() * M_PI + M_PI * 2 / 3;
 	_velocity = velocity * Director::getInstance()->getAnimationInterval();
 	_v_x = _velocity * sin(_angleCW);
 	_v_y = _velocity * cos(_angleCW);
